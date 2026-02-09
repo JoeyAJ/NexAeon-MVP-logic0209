@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhD Research Progress Report - Joey</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & ReactDOM CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        const Icon = ({ name, size = 16, className = "" }) => {
+            useEffect(() => {
+                lucide.createIcons();
+            }, [name]);
+            return <i data-lucide={name} className={className} style={{ width: size, height: size }}></i>;
+        };
+
+        const App = () => {
+            const [lang, setLang] = useState('ko');
+            const [activeTab, setActiveTab] = useState('overview');
+            
+            // ==========================================
+            // 鏈接與資源配置區
+            // ==========================================
+            const n8nWorkflowUrl = "https://nexaeonmvplogic.zeabur.app/home/workflows";
+            const notionUrl = "https://www.notion.so/2e79d0f23cbd8009a902c462da533350?v=2e79d0f23cbd806bb7f1000ca084e4a0&source=copy_link";
+            const surveyUrl = "https://forms.gle/64J3KyxF75zFkfMBA";
+            const draftUrl = "./draft.pdf"; 
+            
+            // 圖片路徑 (請確保圖片與 html 在同一目錄下)
+            const step1Img = "./Step1-參與MVP 測試同學發送郵件.jpg";
+            const step2Img = "./Step2-MVP-Core.jpg";
+            const step3Img = "./Step3-評分.jpg";
+            // ==========================================
+
+            const content = {
+                zh: {
+                    title: "個人化 AI 輔導系統的學習參與度與滿意度研究",
+                    subtitle: "論文進度報告 & MVP 演示",
+                    student: "學生: Joey",
+                    advisor: "指導教授: Woosong University",
+                    n8nBtn: "跳轉至 n8n 工作流演示",
+                    notionBtn: "前往 Notion 前端測試",
+                    tabs: {
+                        overview: "研究概要",
+                        design: "實驗設計",
+                        technical: "MVP 開發進度",
+                        roadmap: "下階段計劃"
+                    },
+                    materials: {
+                        title: "研究資料下載",
+                        draft: "論文草案 (PDF)",
+                        survey: "調查問卷 (Google Forms)"
+                    },
+                    sections: {
+                        overview: {
+                            title: "研究課題與理論構建 (Research Foundation)",
+                            theory: "理論基礎",
+                            theoryDesc: "本研究專注於「個人化 AI 輔導系統」對大學生學習參與度與滿意度的影響。已整合 2024-2025 年多篇 SSCI 級別的最前沿文獻，構建 TAM（技術接受模型）、自我調節學習理論與 VARK 學習風格的交叉模型。",
+                            hypothesis: "研究核心要素",
+                            h1: "課題確立：個人化 AI 對學習參與度與滿意度的影響。",
+                            h2: "理論創新：TAM、自主學習理論與 VARK 的交叉模型。",
+                            h3: "文獻支持：整合 2024-2025 最前沿 SSCI 文獻，確保嚴謹性。"
+                        },
+                        design: {
+                            title: "實驗設計與工具準備 (Methodology & Tools)",
+                            desc: "採用「任務情境模擬 (Task Vignette)」設計，透過 NexAeon AI 教練擬人化交互場景，精準測量受試者的心理反饋。已完成中、韓、英三語版本的調查問卷開發，涵蓋感知個人化 (PP)、感知控制力 (PLC) 等 6 個核心測量維度，並內置 VARK 分流邏輯。",
+                            scenario: "場景：統計學 - 假設檢定學習挫折",
+                            vark: [
+                                { id: "Visual", name: "視覺型 (Visual)", chat: "嘿~我看你的紀錄，你似乎偏好視覺化材料...", color: "bg-green-600" },
+                                { id: "ReadWrite", name: "讀寫型 (Read/Write)", chat: "我看你的紀錄，果然讀文字內容比較輕鬆吧？", color: "bg-emerald-700" },
+                                { id: "Kinesthetic", name: "動覺型 (Kinesthetic)", chat: "我看你的紀錄，你喜歡動手操作對吧？", color: "bg-teal-600" }
+                            ]
+                        },
+                        technical: {
+                            title: "MVP 系統開發進度 (Technical Implementation)",
+                            desc: "技術構建邏輯：已利用 n8n 自動化引擎連結 Notion (前端) 與 Airtable (數據庫)，構建完成系統原型。",
+                            steps: [
+                                { title: "Step 1: 數據導入與篩選", desc: "收到 Google Forms 問卷數據導入 Airtable，並隨機抽取 50% 用戶參與 MVP 測試", icon: "filter" },
+                                { title: "Step 2: 自動化招募", desc: "已實現透過 n8n 自動發送實驗邀請郵件 (給篩選出的 50% 用戶)", icon: "share-2" },
+                                { title: "Step 3: 核心 AI 邏輯", desc: "根據用戶行為自動調用 OpenAI/Gemini 生成個人化學習建議", icon: "cpu" },
+                                { title: "Step 4: 實時評分回傳", desc: "交互滿意度實時同步至 Airtable，確保數據採集的精準度與即時性", icon: "database" }
+                            ],
+                            imgTitle: "n8n 工作流節點截圖"
+                        },
+                        roadmap: {
+                            title: "下階段計劃 (Next Steps)",
+                            done: "已完成理論構建、問卷設計與 MVP 系統開發",
+                            next: "Pilot Test：預計下週進行小規模預測試，優化 AI Prompt 邏輯與系統穩定性",
+                            goal: "正式數據採集：計劃採集 150-200 份有效樣本，隨後進入數據建模與假設檢定階段"
+                        }
+                    },
+                    feedbackTitle: "期待教授的意見",
+                    feedbackList: [
+                        { title: "關於研究模型", desc: "教授，您認為目前我設定的結合 TAM 與 VARK 的模型，作為實證研究是否具有足夠的差異化（創新性）？" },
+                        { title: "關於實驗方法", desc: "透過 Task Vignette 方式測量 AI 的效果，在學術信度上是否充足？如果有需要補充的地方，請您給予指導。" },
+                        { title: "關於系統演示", desc: "在剛才展示的 MVP 自動化流程中，為了提高數據收集的效率，還有哪些技術因素是我需要考慮的？" }
+                    ]
+                },
+                ko: {
+                    title: "개인화된 AI 튜터링 시스템의 학습 참여도 및 만족도 연구",
+                    subtitle: "논문 진행 보고 및 MVP 시연",
+                    student: "발표자: Joey",
+                    advisor: "지도: 우송대학교",
+                    n8nBtn: "n8n 워크플로우 데모 바로가기",
+                    notionBtn: "Notion 프론트엔드 테스트 페이지로 이동",
+                    tabs: {
+                        overview: "연구 개요",
+                        design: "실험 설계",
+                        technical: "MVP 개발 진행",
+                        roadmap: "향후 계획"
+                    },
+                    materials: {
+                        title: "연구 자료",
+                        draft: "논문 초안 (PDF)",
+                        survey: "설문조사 (Google Forms)"
+                    },
+                    sections: {
+                        overview: {
+                            title: "연구 주제 및 이론적 배경 (Research Foundation)",
+                            theory: "이론적 기초",
+                            theoryDesc: "본 연구는 '개인화된 AI 튜터링 시스템'이 대학생의 학습 참여도 및 만족도에 미치는 영향을 탐구합니다. 2024-2025년 최신 SSCI 문헌을 통합하여 TAM, 자기주도 학습 이론, VARK 학습 스타일의 융합 모델을 구축했습니다.",
+                            hypothesis: "연구 핵심 요소",
+                            h1: "주제 확립: 개인화 AI가 학습 참여도 및 만족도에 미치는 영향.",
+                            h2: "이론적 혁신: TAM, 자기주도 학습, VARK의 융합 모델.",
+                            h3: "문헌 지지: 최신 SSCI 문헌 통합으로 학술적 엄밀성 확보."
+                        },
+                        design: {
+                            title: "실험 설계 및 도구 준비 (Methodology & Tools)",
+                            desc: "'과제 모의 설명(Task Vignette)' 방식을 채택하여 NexAeon AI 코치와의 상호작용을 시뮬레이션합니다. 한/중/영 3개국어 설문지를 완성하였으며, PP, PLC 등 6개 핵심 차원을 측정합니다. 또한 VARK 유형에 따른 로직 분기 기능을 포함합니다.",
+                            scenario: "시나리오: 통계학 - 가설 검정 학습 중 좌절감 발생",
+                            vark: [
+                                { id: "Visual", name: "시각적 (Visual)", chat: "ㅎㅇ~ 너 학습 로그 보니까, 완전 시각파 재질이네?", color: "bg-green-600" },
+                                { id: "ReadWrite", name: "읽기/쓰기 (Read/Write)", chat: "너 학습 로그 보니까, 역시 글로 읽는 게 젤 편하지?", color: "bg-emerald-700" },
+                                { id: "Kinesthetic", name: "운동감각 (Kinesthetic)", chat: "너 학습 로그 보니까, 직접 해봐야 직성이 풀리지?", color: "bg-teal-600" }
+                            ]
+                        },
+                        technical: {
+                            title: "MVP 시스템 개발 진행 (Technical Implementation)",
+                            desc: "기술 구축 로직: n8n 자동화 엔진을 활용하여 Notion(프론트엔드)과 Airtable(데이터베이스)을 연결하여 시스템 프로토타입 구축을 완료했습니다.",
+                            steps: [
+                                { title: "Step 1: 데이터 연동 및 선별", desc: "Google Forms 응답을 Airtable로 가져와 50% 인원을 무작위로 추출하여 테스트 진행", icon: "filter" },
+                                { title: "Step 2: 자동화 모집", desc: "n8n을 통해 선별된 50% 인원에게 실험 초대 이메일 자동 발송", icon: "share-2" },
+                                { title: "Step 3: 핵심 AI 로직", desc: "사용자 행동 기반 OpenAI/Gemini 호출 및 맞춤형 학습 제안 생성", icon: "cpu" },
+                                { title: "Step 4: 실시간 평점 전송", desc: "Notion 상호작용 만족도의 Airtable 실시간 동기화로 데이터 정확성 확보", icon: "database" }
+                            ],
+                            imgTitle: "n8n 워크플로우 노드 스크린샷"
+                        },
+                        roadmap: {
+                            title: "향후 계획 (Next Steps)",
+                            done: "이론 모델 구축, 설문 설계 및 MVP 시스템 개발 완료",
+                            next: "Pilot Test: 다음 주 소규모 사전 테스트 진행, AI 프롬프트 및 안정성 최적화",
+                            goal: "본 데이터 수집: 유효 표본 150-200개 수집 목표, 이후 데이터 모델링 및 가설 검증 단계 진입"
+                        }
+                    },
+                    feedbackTitle: "교수님 피드백 요청",
+                    feedbackList: [
+                        { title: "연구 모델에 관하여", desc: "교수님, 현재 제가 설정한 TAM과 VARK를 결합한 모델이 실증 연구로서 충분한 차별성이 있다고 생각하시는지 궁금합니다." },
+                        { title: "실험 방법에 관하여", desc: "Task Vignette 방식을 통해 AI의 효과를 측정하는 것이 학술적으로 신뢰성을 확보하기에 충분할까요? 추가적인 보완 점이 있다면 말씀 부탁드립니다." },
+                        { title: "시스템 시연에 관하여", desc: "방금 보여드린 MVP의 자동화 프로세스에서 데이터 수집 효율성을 높이기 위해 더 고려해야 할 기술적 요소가 있을까요?" }
+                    ]
+                }
+            };
+
+            const t = content[lang];
+
+            const NexAeonChat = ({ message, color }) => (
+                <div className="flex flex-col gap-4 max-w-xs mx-auto md:mx-0">
+                    <div className="flex items-center gap-2 mb-1">
+                        <div className="w-8 h-8 rounded-full bg-purple-900 flex items-center justify-center border-2 border-white shadow-sm overflow-hidden text-white font-bold text-[10px]">NA</div>
+                        <span className="text-xs font-bold text-slate-700">AI Coach NexAeon</span>
+                    </div>
+                    <div className={`${color} text-white p-4 rounded-2xl rounded-tl-none shadow-md text-sm leading-relaxed relative`}>
+                        {message}
+                        <div className="mt-2 text-[10px] text-white/70">Online • Just now</div>
+                    </div>
+                    <div className="flex justify-end">
+                        <div className="bg-slate-200 text-slate-800 p-2 px-4 rounded-2xl rounded-tr-none text-xs font-medium">
+                            {lang === 'ko' ? "네, 보여주세요!" : "是的，請展示！"}
+                        </div>
+                    </div>
+                </div>
+            );
+
+            return (
+                <div className="min-h-screen bg-slate-100 pb-20">
+                    <header className="bg-white border-b sticky top-0 z-20 shadow-sm">
+                        <div className="max-w-6xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center text-white shadow-lg">
+                                    <Icon name="cpu" size={24} />
+                                </div>
+                                <div>
+                                    <h1 className="text-lg font-bold text-slate-800 tracking-tight">{t.title}</h1>
+                                    <p className="text-xs text-slate-500 font-medium">{t.subtitle}</p>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-4">
+                                <button onClick={() => window.open(n8nWorkflowUrl, '_blank')} className="bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold py-2 px-4 rounded-full flex items-center gap-2 transition-all shadow-md active:scale-95">
+                                    <Icon name="play" size={14} /> {t.n8nBtn}
+                                </button>
+                                <div className="flex bg-slate-200 p-1 rounded-full">
+                                    <button onClick={() => setLang('zh')} className={`px-4 py-1.5 rounded-full text-xs transition ${lang === 'zh' ? 'bg-white shadow text-indigo-600 font-extrabold' : 'text-slate-500'}`}>ZH</button>
+                                    <button onClick={() => setLang('ko')} className={`px-4 py-1.5 rounded-full text-xs transition ${lang === 'ko' ? 'bg-white shadow text-indigo-600 font-extrabold' : 'text-slate-500'}`}>KO</button>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    <main className="max-w-6xl mx-auto px-6 mt-8">
+                        <div className="flex gap-4 mb-8 overflow-x-auto pb-2 scrollbar-hide">
+                            {Object.keys(t.tabs).map((tab) => (
+                                <button key={tab} onClick={() => setActiveTab(tab)} className={`whitespace-nowrap flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-bold transition-all ${activeTab === tab ? 'bg-indigo-600 text-white shadow-xl translate-y-[-2px]' : 'bg-white text-slate-500 hover:bg-slate-50 border border-slate-200'}`}>
+                                    <Icon name={tab === 'overview' ? 'book-open' : tab === 'design' ? 'smartphone' : tab === 'technical' ? 'settings' : 'bar-chart-3'} size={16}/> {t.tabs[tab]}
+                                </button>
+                            ))}
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                            <div className="lg:col-span-3 space-y-6">
+                                {activeTab === 'overview' && (
+                                    <section className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
+                                        <div className="flex items-center gap-3 mb-6">
+                                            <div className="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 font-bold">1</div>
+                                            <h2 className="text-xl font-black">{t.sections.overview.theory}</h2>
+                                        </div>
+                                        <div className="p-6 bg-gradient-to-br from-indigo-50 to-white rounded-2xl border border-indigo-100 mb-8 font-medium leading-relaxed italic text-indigo-900 italic">
+                                            "{t.sections.overview.theoryDesc}"
+                                        </div>
+                                        <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">{t.sections.overview.hypothesis}</h3>
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                            {[t.sections.overview.h1, t.sections.overview.h2, t.sections.overview.h3].map((h, i) => (
+                                                <div key={i} className="p-4 bg-slate-50 rounded-xl border border-slate-200 hover:border-indigo-300 transition-all">
+                                                    <Icon name="check-circle" className="text-indigo-600 mb-3" />
+                                                    <p className="text-sm font-bold text-slate-700 leading-snug">{h}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </section>
+                                )}
+
+                                {activeTab === 'design' && (
+                                    <section className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
+                                        <div className="mb-8">
+                                            <h2 className="text-xl font-black mb-2">{t.sections.design.title}</h2>
+                                            <p className="text-sm text-slate-500">{t.sections.design.desc}</p>
+                                        </div>
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                                            {t.sections.design.vark.map((item, i) => (
+                                                <div key={i} className="space-y-4 p-4 rounded-2xl border border-slate-100 bg-slate-50/50">
+                                                    <span className="text-[10px] font-black bg-white px-2 py-1 rounded-md border border-slate-200 shadow-sm uppercase">{item.name}</span>
+                                                    <NexAeonChat message={item.chat} color={item.color} />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </section>
+                                )}
+
+                                {activeTab === 'technical' && (
+                                    <section className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
+                                        <h2 className="text-xl font-black mb-2">{t.sections.technical.title}</h2>
+                                        <p className="text-sm text-indigo-600 font-bold mb-10 bg-indigo-50 p-3 rounded-lg border border-indigo-100 inline-block">{t.sections.technical.desc}</p>
+                                        
+                                        {/* Original 4 Steps - Horizontal Layout Preserved */}
+                                        <div className="flex flex-col md:flex-row items-stretch justify-between gap-6 mb-12">
+                                            {t.sections.technical.steps.map((step, i) => (
+                                                <div key={i} className="flex-1 w-full bg-slate-50 p-6 rounded-2xl border border-slate-200 hover:shadow-lg transition flex flex-col">
+                                                    <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center mb-4 shadow-lg shadow-indigo-200 shrink-0">
+                                                        <Icon name={step.icon} size={18} />
+                                                    </div>
+                                                    <h4 className="font-black text-sm mb-2">{step.title}</h4>
+                                                    <p className="text-xs text-slate-500 leading-relaxed">{step.desc}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        {/* NEW: Image Gallery Grid */}
+                                        <div className="mb-12">
+                                            <h3 className="font-bold text-slate-800 mb-6 flex items-center gap-2">
+                                                <Icon name="image" className="text-indigo-600"/> {t.sections.technical.imgTitle}
+                                            </h3>
+                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                                <div className="space-y-3">
+                                                    <div className="aspect-video bg-slate-100 rounded-xl border border-slate-200 overflow-hidden relative group">
+                                                        <img src={step1Img} alt="Step 1 Recruitment" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onError={(e) => e.target.style.display = 'none'} />
+                                                    </div>
+                                                    <p className="text-xs font-bold text-center text-slate-600">Step 1 & 2: Recruitment</p>
+                                                </div>
+                                                <div className="space-y-3">
+                                                    <div className="aspect-video bg-slate-100 rounded-xl border border-slate-200 overflow-hidden relative group">
+                                                        <img src={step2Img} alt="Step 2 Core" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onError={(e) => e.target.style.display = 'none'} />
+                                                    </div>
+                                                    <p className="text-xs font-bold text-center text-slate-600">Step 3: Core AI Logic</p>
+                                                </div>
+                                                <div className="space-y-3">
+                                                    <div className="aspect-video bg-slate-100 rounded-xl border border-slate-200 overflow-hidden relative group">
+                                                        <img src={step3Img} alt="Step 3 Rating" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onError={(e) => e.target.style.display = 'none'} />
+                                                    </div>
+                                                    <p className="text-xs font-bold text-center text-slate-600">Step 4: Real-time Feedback</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Live Demonstration */}
+                                        <div className="bg-slate-900 rounded-2xl p-8 text-white relative overflow-hidden group">
+                                            <div className="relative z-10">
+                                                <h4 className="text-orange-400 text-xs font-black uppercase tracking-widest mb-2">Live Demonstration</h4>
+                                                <p className="text-lg font-bold mb-6 max-w-md">Real-time System Links</p>
+                                                
+                                                <div className="flex flex-col sm:flex-row gap-4">
+                                                    <button onClick={() => window.open(n8nWorkflowUrl, '_blank')} className="bg-indigo-600 hover:bg-indigo-700 px-8 py-3 rounded-full text-sm font-black transition-all flex items-center gap-3 shadow-xl active:scale-95">
+                                                        <Icon name="play" /> {t.n8nBtn}
+                                                    </button>
+                                                    
+                                                    <button onClick={() => window.open(notionUrl, '_blank')} className="bg-white text-slate-900 hover:bg-slate-100 px-8 py-3 rounded-full text-sm font-black transition-all flex items-center gap-3 shadow-xl active:scale-95">
+                                                        <Icon name="layout" /> {t.notionBtn}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                )}
+
+                                {activeTab === 'roadmap' && (
+                                    <section className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
+                                        <h2 className="text-xl font-black mb-8">{t.sections.roadmap.title}</h2>
+                                        <div className="space-y-12 pl-4">
+                                            <div className="flex gap-6 border-l-2 border-slate-100 pl-8 relative">
+                                                <div className="absolute -left-[13px] top-0 w-6 h-6 rounded-full bg-indigo-600 ring-4 ring-indigo-100 flex items-center justify-center font-bold text-white text-[10px]">✓</div>
+                                                <div className="pb-10">
+                                                    <h4 className="font-black text-slate-800">Completed</h4>
+                                                    <p className="text-sm text-slate-500">{t.sections.roadmap.done}</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex gap-6 border-l-2 border-slate-100 pl-8 relative">
+                                                <div className="absolute -left-[13px] top-0 w-6 h-6 rounded-full bg-orange-400 ring-4 ring-orange-100 animate-pulse"></div>
+                                                <div className="pb-10">
+                                                    <h4 className="font-black text-slate-800 text-orange-600">Next Step: Pilot Test</h4>
+                                                    <p className="text-sm text-slate-500">{t.sections.roadmap.next}</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex gap-6 border-l-2 border-slate-100 pl-8 relative">
+                                                <div className="absolute -left-[13px] top-0 w-6 h-6 rounded-full bg-slate-200 ring-4 ring-slate-100"></div>
+                                                <div className="pb-10">
+                                                    <h4 className="font-black text-slate-500">Goal</h4>
+                                                    <p className="text-sm text-slate-500">{t.sections.roadmap.goal}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                )}
+                            </div>
+
+                            <aside className="space-y-6">
+                                <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
+                                    <h3 className="font-black text-slate-800 mb-4 flex items-center gap-2">
+                                        <Icon name="folder-open" className="text-indigo-600" /> {t.materials.title}
+                                    </h3>
+                                    <div className="space-y-3">
+                                        <button onClick={() => window.open(draftUrl, '_blank')} className="w-full flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-200 hover:bg-indigo-50 hover:border-indigo-200 transition group text-left">
+                                            <Icon name="file-text" size={16} className="text-slate-400 group-hover:text-indigo-600" />
+                                            <span className="text-xs font-bold text-slate-700">{t.materials.draft}</span>
+                                        </button>
+                                        <button onClick={() => window.open(surveyUrl, '_blank')} className="w-full flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-200 hover:bg-indigo-50 hover:border-indigo-200 transition group text-left">
+                                            <Icon name="clipboard-list" size={16} className="text-slate-400 group-hover:text-indigo-600" />
+                                            <span className="text-xs font-bold text-slate-700">{t.materials.survey}</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
+                                    <h3 className="font-black text-slate-800 mb-4 flex items-center gap-2">
+                                        <Icon name="layers" className="text-indigo-600" /> {t.feedbackTitle}
+                                    </h3>
+                                    <div className="space-y-4">
+                                        {t.feedbackList.map((item, i) => (
+                                            <div key={i} className="p-3 bg-slate-50 rounded-xl border border-slate-100 hover:bg-indigo-50 transition">
+                                                <p className="text-xs font-bold text-slate-700 mb-1">{i+1}. {item.title}</p>
+                                                <p className="text-[10px] text-slate-500 leading-relaxed">{item.desc}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                    </main>
+
+                    <footer className="fixed bottom-0 left-0 right-0 bg-white/60 backdrop-blur-md border-t py-4 text-center">
+                        <p className="text-[10px] font-black text-slate-400 tracking-widest uppercase">
+                            © 2026 Joey • Woosong University • PhD Research Progress
+                        </p>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
