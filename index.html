@@ -35,7 +35,7 @@
 
         const App = () => {
             const [lang, setLang] = useState('ko');
-            const [activeTab, setActiveTab] = useState('overview');
+            const [activeTab, setActiveTab] = useState('technical'); // Default to technical to show new changes
             
             // ==========================================
             // 鏈接與資源配置區
@@ -43,9 +43,9 @@
             const n8nWorkflowUrl = "https://nexaeonmvplogic.zeabur.app/home/workflows";
             const notionUrl = "https://www.notion.so/2e79d0f23cbd8009a902c462da533350?v=2e79d0f23cbd806bb7f1000ca084e4a0&source=copy_link";
             const surveyUrl = "https://forms.gle/64J3KyxF75zFkfMBA";
-            const draftUrl = "https://github.com/JoeyAJ/NexAeon-MVP-logic0209/blob/main/draft.pdf"; 
+            const draftUrl = "./draft.pdf"; 
             
-            // 圖片路徑 (請確保圖片與 html 在同一目錄下)
+            // 圖片路徑
             const step1Img = "./step1.jpg";
             const step2Img = "./step2.jpg";
             const step3Img = "./step3.jpg";
@@ -92,7 +92,34 @@
                         },
                         technical: {
                             title: "MVP 系統開發進度 (Technical Implementation)",
-                            desc: "技術構建邏輯：已利用 n8n 自動化引擎連結 Notion (前端) 與 Airtable (數據庫)，構建完成系統原型。",
+                            desc: "技術構建邏輯：利用 n8n 自動化引擎連結 Notion (前端) 與 Airtable (數據庫)。",
+                            // NEW SECTION: MVP Purpose
+                            mvpPurpose: {
+                                title: "MVP 開發的核心學術目的",
+                                desc: "從博士研究角度，開發此系統是為了確保「實證價值」與「技術落地」。",
+                                points: [
+                                    {
+                                        title: "1. 將「抽象理論」轉化為「可觀測變數」",
+                                        desc: "將 TAM 的感知易用性/有用性轉化為真實操作，並透過實際互動抓取 VARK 行為數據，提升信度。",
+                                        icon: "activity"
+                                    },
+                                    {
+                                        title: "2. 建立「教學教練 (Coach)」角色的實驗場景",
+                                        desc: "模擬 24/7 在線教練，觀察其在 Task Vignette 挫折場景下的即時回饋與個人化干預效果。",
+                                        icon: "user-check"
+                                    },
+                                    {
+                                        title: "3. 解決「數據採集」的自動化與效率問題",
+                                        desc: "整合 Google Forms、Airtable 與 n8n 構建閉環，自動化篩選與採集 150-200 份樣本，避免人工誤差。",
+                                        icon: "database"
+                                    },
+                                    {
+                                        title: "4. 增加論文的「差異化」與「說服力」",
+                                        desc: "不僅是問卷統計，而是展示運作中的系統原型 (System Prototype)，以實踐深度驗證 2024-2025 最新文獻。",
+                                        icon: "award"
+                                    }
+                                ]
+                            },
                             steps: [
                                 { title: "Step 1: 數據導入與篩選", desc: "收到 Google Forms 問卷數據導入 Airtable，並隨機抽取 50% 用戶參與 MVP 測試", icon: "filter" },
                                 { title: "Step 2: 自動化招募", desc: "已實現透過 n8n 自動發送實驗邀請郵件 (給篩選出的 50% 用戶)", icon: "share-2" },
@@ -156,8 +183,35 @@
                         technical: {
                             title: "MVP 시스템 개발 진행 (Technical Implementation)",
                             desc: "기술 구축 로직: n8n 자동화 엔진을 활용하여 Notion(프론트엔드)과 Airtable(데이터베이스)을 연결하여 시스템 프로토타입 구축을 완료했습니다.",
+                            // NEW SECTION: MVP Purpose in Korean
+                            mvpPurpose: {
+                                title: "MVP 개발의 핵심 학술적 목적",
+                                desc: "박사 연구 관점에서, 본 시스템 개발은 '실증적 가치'와 '기술 구현'을 확보하기 위함입니다.",
+                                points: [
+                                    {
+                                        title: "1. '추상적 이론'을 '관찰 가능한 변수'로 전환",
+                                        desc: "TAM의 유용성/용이성을 실제 조작으로 전환하고, 실제 상호작용을 통해 VARK 행동 데이터를 수집하여 신뢰도를 높입니다.",
+                                        icon: "activity"
+                                    },
+                                    {
+                                        title: "2. '학습 코치(Coach)' 역할의 실험 시나리오 구축",
+                                        desc: "24/7 온라인 코치를 시뮬레이션하여, Task Vignette 좌절 상황에서의 즉각적인 피드백과 개인화 개입 효과를 관찰합니다.",
+                                        icon: "user-check"
+                                    },
+                                    {
+                                        title: "3. '데이터 수집'의 자동화 및 효율성 문제 해결",
+                                        desc: "Google Forms, Airtable, n8n을 통합하여 150-200명 표본의 선별 및 수집을 자동화하고 인적 오차를 방지합니다.",
+                                        icon: "database"
+                                    },
+                                    {
+                                        title: "4. 논문의 '차별성'과 '설득력' 강화",
+                                        desc: "단순 설문 통계를 넘어 작동하는 시스템 프로토타입(System Prototype)을 제시하여 2024-2025 최신 문헌을 기술적으로 검증합니다.",
+                                        icon: "award"
+                                    }
+                                ]
+                            },
                             steps: [
-                                { title: "Step 1: 데이터 연동 및 선별", desc: "Google Forms 응답을 Airtable로 가져와 50% 인원을 Random로 추출하여 테스트 진행", icon: "filter" },
+                                { title: "Step 1: 데이터 연동 및 선별", desc: "Google Forms 응답을 Airtable로 가져와 50% 인원을 무작위로 추출하여 테스트 진행", icon: "filter" },
                                 { title: "Step 2: 자동화 모집", desc: "n8n을 통해 선별된 50% 인원에게 실험 초대 이메일 자동 발송", icon: "share-2" },
                                 { title: "Step 3: 핵심 AI 로직", desc: "사용자 행동 기반 OpenAI/Gemini 호출 및 맞춤형 학습 제안 생성", icon: "cpu" },
                                 { title: "Step 4: 실시간 평점 전송", desc: "Notion 상호작용 만족도의 Airtable 실시간 동기화로 데이터 정확성 확보", icon: "database" }
@@ -277,7 +331,32 @@
                                 {activeTab === 'technical' && (
                                     <section className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
                                         <h2 className="text-xl font-black mb-2">{t.sections.technical.title}</h2>
-                                        <p className="text-sm text-indigo-600 font-bold mb-10 bg-indigo-50 p-3 rounded-lg border border-indigo-100 inline-block">{t.sections.technical.desc}</p>
+                                        <p className="text-sm text-slate-500 mb-8">{t.sections.technical.desc}</p>
+                                        
+                                        {/* NEW: MVP Purpose Section */}
+                                        <div className="bg-gradient-to-br from-indigo-900 to-indigo-800 rounded-2xl p-6 text-white mb-10 shadow-lg relative overflow-hidden">
+                                            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+                                            <h3 className="font-bold text-lg mb-2 relative z-10 flex items-center gap-2">
+                                                <Icon name="target" className="text-orange-400" /> {t.sections.technical.mvpPurpose.title}
+                                            </h3>
+                                            <p className="text-xs text-indigo-200 mb-6 relative z-10 opacity-80">{t.sections.technical.mvpPurpose.desc}</p>
+                                            
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10">
+                                                {t.sections.technical.mvpPurpose.points.map((point, i) => (
+                                                    <div key={i} className="bg-white/10 backdrop-blur-sm p-4 rounded-xl border border-white/10 hover:bg-white/20 transition group">
+                                                        <div className="flex items-start gap-3">
+                                                            <div className="mt-1 text-orange-400 shrink-0">
+                                                                <Icon name={point.icon} size={18} />
+                                                            </div>
+                                                            <div>
+                                                                <h4 className="font-bold text-sm mb-1 text-white group-hover:text-orange-300 transition">{point.title}</h4>
+                                                                <p className="text-[11px] leading-relaxed text-indigo-100 opacity-80">{point.desc}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
                                         
                                         {/* Original 4 Steps - Horizontal Layout Preserved */}
                                         <div className="flex flex-col md:flex-row items-stretch justify-between gap-6 mb-12">
@@ -292,7 +371,7 @@
                                             ))}
                                         </div>
 
-                                        {/* NEW: Image Gallery Grid */}
+                                        {/* Image Gallery Grid */}
                                         <div className="mb-12">
                                             <h3 className="font-bold text-slate-800 mb-6 flex items-center gap-2">
                                                 <Icon name="image" className="text-indigo-600"/> {t.sections.technical.imgTitle}
@@ -302,13 +381,13 @@
                                                     <div className="aspect-video bg-slate-100 rounded-xl border border-slate-200 overflow-hidden relative group">
                                                         <img src={step1Img} alt="Step 1 Recruitment" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onError={(e) => e.target.style.display = 'none'} />
                                                     </div>
-                                                    <p className="text-xs font-bold text-center text-slate-600">Step 1 & 2: Send an E-mail to MVP Participants</p>
+                                                    <p className="text-xs font-bold text-center text-slate-600">Step 1 & 2: Recruitment</p>
                                                 </div>
                                                 <div className="space-y-3">
                                                     <div className="aspect-video bg-slate-100 rounded-xl border border-slate-200 overflow-hidden relative group">
                                                         <img src={step2Img} alt="Step 2 Core" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onError={(e) => e.target.style.display = 'none'} />
                                                     </div>
-                                                    <p className="text-xs font-bold text-center text-slate-600">Step 3: NexAeon-MVP Core WorkFlow</p>
+                                                    <p className="text-xs font-bold text-center text-slate-600">Step 3: Core AI Logic</p>
                                                 </div>
                                                 <div className="space-y-3">
                                                     <div className="aspect-video bg-slate-100 rounded-xl border border-slate-200 overflow-hidden relative group">
